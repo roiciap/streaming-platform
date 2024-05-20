@@ -6,3 +6,6 @@ services:
     ports:
       - "1935:1935"
     container_name: rtmp_server
+  db:
+    build: ./db
+    container_name: db
