@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/roiciap/streaming-platform/go/be/user-service/http/handlers"
+	"github.com/roiciap/streaming-platform/go/be/user-service/internal/http/handlers"
 )
 
 func main() {
