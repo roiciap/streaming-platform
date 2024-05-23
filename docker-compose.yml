@@ -8,6 +8,8 @@ services:
     container_name: rtmp_server
   db:
     build: ./db
+    ports:
+      - "5432:5432"
     container_name: db
     environment:
       - POSTGRES_USER=admin

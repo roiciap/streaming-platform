@@ -21,13 +21,13 @@ func ReadCredsFromRequest(body io.ReadCloser) (creds *http_model.CreditentialsRe
 	return nil, err
 }
 
-func BuildDbUserFromRequest(creds *http_model.CreditentialsRequest) (credsDb *db_model.UserDb, err error) {
+func BuildUserWriteFromRequest(creds *http_model.CreditentialsRequest) (credsDb *db_model.UserDbWrite, err error) {
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(creds.Password), 14)
 	if err != nil {
 		return nil, err
 	}
-	credsDb = &db_model.UserDb{
-		Login:        creds.Login,
+	credsDb = &db_model.UserDbWrite{
+		Username:     creds.Login,
 		PasswordHash: passwordHash,
 	}
 	return

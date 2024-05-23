@@ -1,6 +1,16 @@
 package db_model
 
-type UserDb struct {
-	Login        string
+import "github.com/google/uuid"
+
+type UserDbWrite struct {
+	Username     string
 	PasswordHash []byte
+}
+
+type UserDbRead struct {
+	Id           int
+	Username     string
+	PasswordHash []byte
+	StreamGUID   uuid.UUID
+	SettingsId   int
 }

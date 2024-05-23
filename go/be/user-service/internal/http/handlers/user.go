@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"regexp"
 
+	"github.com/roiciap/streaming-platform/go/be/user-service/internal/db/crud"
 	"github.com/roiciap/streaming-platform/go/be/user-service/internal/services"
 )
 
@@ -39,7 +40,9 @@ func (h *UserHandler) login(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-	match := services.CheckPasswordMatch(creds.Password, []byte("AAA"))
+	// read user from db and compare password
+	user, err := crud.ReadUserByLogin(creds.Login)
+	match := services.CheckPasswordMatch(creds.Password, user.PasswordHash)
 	if !match {
 		http.Error(w, "Invalid creditentials", http.StatusBadRequest)
 		return
@@ -56,14 +59,19 @@ func (h *UserHandler) register(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-
-	_, err = services.BuildDbUserFromRequest(creds)
+	// build crud-add user model
+	user, err := services.BuildUserWriteFromRequest(creds)
 	if err != nil {
 		http.Error(w, "Problem occured in creating user", http.StatusInternalServerError)
 		return
 	}
-	// save creds to DB
-
+	// save user to DB
+	err = crud.AddUser(*user)
+	if err != nil {
+		http.Error(w, "Couldnt save user", http.StatusInternalServerError)
+		return
+	}
 	// add cookies
+
 	w.WriteHeader(http.StatusOK)
 }
