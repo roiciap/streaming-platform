@@ -11,7 +11,7 @@ import (
 
 const (
 	insertUserQuery  = `INSERT INTO account.users (username, password_hash) VALUES ($1, $2) RETURNING id`
-	readOneUserQuery = "SELECT id, username, password_hash,stream_guid, settings_id FROM users WHERE username='$1'"
+	readOneUserQuery = "SELECT id, username, password_hash,stream_guid, settings_id FROM account.users WHERE username = $1"
 )
 
 func AddUser(user db_model.UserDbWrite) error {
@@ -32,8 +32,8 @@ func AddUser(user db_model.UserDbWrite) error {
 }
 
 func ReadUserByLogin(login string) (*db_model.UserDbRead, error) {
-	var user *db_model.UserDbRead
 	var streamGUID sql.NullString
+	user := &db_model.UserDbRead{}
 	db, err := openDb()
 	if err != nil {
 		return nil, err

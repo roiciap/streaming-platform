@@ -6,6 +6,6 @@ import (
 
 type User struct {
 	Id         int
-	Login      string
-	StreamGuid uuid.UUID
+	Username   string
+	StreamGUID uuid.UUID
 }

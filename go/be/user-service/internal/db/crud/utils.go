@@ -12,9 +12,9 @@ import (
 const (
 	host     = "localhost"
 	port     = 5432
-	user     = "yourusername"
-	password = "yourpassword"
-	dbname   = "yourdbname"
+	user     = "admin"
+	password = "admin"
+	dbname   = "main_db"
 )
 
 func openDb() (*sql.DB, error) {

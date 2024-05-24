@@ -11,7 +11,6 @@ func main() {
 	handler := handlers.NewUserHandler()
 	mux.Handle("/login", handler)
 	mux.Handle("/register", handler)
-	mux.Handle("/settings/", handler)
 
 	http.ListenAndServe(":8080", mux)
 }

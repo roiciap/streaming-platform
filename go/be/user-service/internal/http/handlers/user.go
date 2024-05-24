@@ -42,6 +42,10 @@ func (h *UserHandler) login(w http.ResponseWriter, r *http.Request) {
 	}
 	// read user from db and compare password
 	user, err := crud.ReadUserByLogin(creds.Login)
+	if err != nil {
+		http.Error(w, "Couldnt find user", http.StatusBadRequest)
+		return
+	}
 	match := services.CheckPasswordMatch(creds.Password, user.PasswordHash)
 	if !match {
 		http.Error(w, "Invalid creditentials", http.StatusBadRequest)
