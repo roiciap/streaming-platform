@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package JWTAuth;
+
+service JWTService {
+    rpc GenerateToken (JWTTokenRequest) returns (JWTTokenResponse);
+}
+
+message JWTTokenRequest {
+    int user_id = 1;
+}
+
+message JWTTokenResponse {
+    string token = 1;
+}
