@@ -2,12 +2,14 @@ syntax = "proto3";
 
 package JWTAuth;
 
+option go_package = "./jwt-auth";
+
 service JWTService {
     rpc GenerateToken (JWTTokenRequest) returns (JWTTokenResponse);
 }
 
 message JWTTokenRequest {
-    int user_id = 1;
+    uint32 user_id = 1;
 }
 
 message JWTTokenResponse {
